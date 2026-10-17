@@ -2,10 +2,7 @@ import streamlit as st
 import time
 
 # --- CONFIGURAÇÃO DA PÁGINA ---
-st.set_page_config(
-    page_title="Agradecimento", 
-    layout="centered"
-)
+st.set_page_config(page_title="Desafio???", layout="centered")
 
 # --- ESTADO DA SESSÃO ---
 if 'etapa' not in st.session_state:
@@ -49,7 +46,7 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
             if st.button("Verificar", type="primary", use_container_width=True):
                 marcados = [i for i, marcado in enumerate(escolhas) if marcado]
                 
-                # Regra mais fácil: só precisa acertar 3 quadrados corretos
+                # Regra fácil: só precisa acertar 3 quadrados corretos
                 acertos = len(set(marcados).intersection(set(quadrados_corretos)))
                 
                 if acertos >= 3: 
@@ -77,7 +74,6 @@ if st.session_state.etapa == 0:
     if nome_input.strip() != "":
         col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
         with col_img2:
-            # ALTERADO PARA .png
             st.image("meme_silvio_1.png", use_container_width=True)
         
         st.markdown(f"#### Você digitou: **{nome_input}**")
@@ -100,7 +96,6 @@ if st.session_state.etapa == 0:
 elif st.session_state.etapa == 1:
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
-        # ALTERADO PARA .png
         st.image("meme_silvio_2.png", use_container_width=True)
         
     st.success(f"**Certa resposta, {st.session_state.nome_usuario}!**")
@@ -112,14 +107,14 @@ elif st.session_state.etapa == 1:
 # ETAPA 2: Captcha 1 (Café)
 elif st.session_state.etapa == 2:
     titulo_captcha1 = "Selecione o líquido sagrado que ajuda a evitar um processo administrativo:"
-    # Se os captchas também foram renomeados para .png, mude aqui
-    renderizar_captcha("captcha1_cafe.jpg", titulo_captcha1, [3, 4, 5, 6, 7])
+    # Alterado para .png
+    renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
 
 # ETAPA 3: Captcha 2 (Rivotril)
 elif st.session_state.etapa == 3:
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
-    # Se os captchas também foram renomeados para .png, mude aqui
-    renderizar_captcha("captcha2_rivotril.jpg", titulo_captcha2, [3, 4, 5, 6, 7])
+    # Alterado para .png
+    renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
 # ETAPA 4: Mensagem Final (Texto Atualizado)
 elif st.session_state.etapa == 4:
