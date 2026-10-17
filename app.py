@@ -1,16 +1,28 @@
 import streamlit as st
 import time
 
-# Configuração da página
-st.set_page_config(page_title="Agradecimento do André", layout="centered")
+# --- CONFIGURAÇÃO DA PÁGINA E TRADUÇÃO ---
+# Traduz a interface do Streamlit para Português (resolve o "Press Enter to apply")
+st.set_page_config(
+    page_title="Agradecimento do André", 
+    layout="centered",
+    menu_items={
+        'Get Help': None,
+        'Report a bug': None,
+        'About': None
+    }
+)
 
-# --- ESTADO DA SESSÃO (Controle de fluxo) ---
+# --- ESTADO DA SESSÃO ---
 if 'etapa' not in st.session_state:
     st.session_state.etapa = 0
 if 'nome_usuario' not in st.session_state:
     st.session_state.nome_usuario = ""
 if 'erro_captcha' not in st.session_state:
     st.session_state.erro_captcha = False
+# Chave dinâmica para limpar o campo de texto
+if 'input_key' not in st.session_state:
+    st.session_state.input_key = 0 
 
 # --- FUNÇÃO PARA CRIAR O CAPTCHA INTERATIVO ---
 def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
@@ -44,10 +56,10 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
             if st.button("Verificar", type="primary", use_container_width=True):
                 marcados = [i for i, marcado in enumerate(escolhas) if marcado]
                 
+                # REGRA NOVA: Basta acertar pelo menos 3 quadrados corretos
                 acertos = len(set(marcados).intersection(set(quadrados_corretos)))
-                erros = len(set(marcados) - set(quadrados_corretos))
                 
-                if acertos >= 3 and erros == 0: 
+                if acertos >= 3: 
                     st.success("Captcha verificado! Avançando...")
                     time.sleep(1)
                     st.session_state.etapa += 1
@@ -63,13 +75,17 @@ st.title("💌 Agradecimento do André")
 if st.session_state.etapa == 0:
     st.markdown("### Antes de começar, precisamos de uma informação...")
     
-    nome_input = st.text_input("Qual é o seu nome?", placeholder="Digite seu nome aqui...")
+    # Usa a chave dinâmica para permitir a limpeza
+    nome_input = st.text_input(
+        "Qual é o seu nome?", 
+        placeholder="Digite seu nome aqui...", 
+        key=f"nome_input_{st.session_state.input_key}"
+    )
     
-    # Se o usuário digitou algo, mostra o Meme 1 e as opções
     if nome_input.strip() != "":
         col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
         with col_img2:
-            st.image("meme_silvio_1.png", use_container_width=True)
+            st.image("meme_silvio_1.jpg", use_container_width=True)
         
         st.markdown(f"#### Você digitou: **{nome_input}**")
         st.markdown("**Está certo disso? Posso perguntar?** 🤨")
@@ -78,12 +94,14 @@ if st.session_state.etapa == 0:
         with col1:
             if st.button("Sim, é esse mesmo. ✅", type="primary", use_container_width=True):
                 st.session_state.nome_usuario = nome_input
-                st.session_state.etapa = 1  # Avança para a tela do "Certa Resposta"
+                st.session_state.etapa = 1 
                 st.rerun()
         with col2:
             if st.button("Não, quero corrigir ✏️", use_container_width=True):
-                st.session_state.nome_usuario = ""
-                st.rerun() # Recarrega a página limpando o campo (na prática, o Streamlit limpa o text_input ao recarregar)
+                # Truque: Incrementa a chave do input. Isso força o Streamlit a criar um campo novo (vazio) 
+                # e faz a imagem do Silvio sumir automaticamente.
+                st.session_state.input_key += 1 
+                st.rerun() 
     else:
         st.warning("Ei, você precisa digitar um nome! Não vale deixar em branco. 😉")
 
@@ -91,7 +109,7 @@ if st.session_state.etapa == 0:
 elif st.session_state.etapa == 1:
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
-        st.image("meme_silvio_2.png", use_container_width=True)
+        st.image("meme_silvio_2.jpg", use_container_width=True)
         
     st.success(f"**Certa resposta, {st.session_state.nome_usuario}!**")
     
@@ -102,19 +120,18 @@ elif st.session_state.etapa == 1:
 # ETAPA 2: Captcha 1 (Café)
 elif st.session_state.etapa == 2:
     titulo_captcha1 = "Selecione o líquido sagrado que ajuda a evitar um processo administrativo:"
-    renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
+    renderizar_captcha("captcha1_cafe.jpg", titulo_captcha1, [3, 4, 5, 6, 7])
 
 # ETAPA 3: Captcha 2 (Rivotril)
 elif st.session_state.etapa == 3:
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
-    renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
+    renderizar_captcha("captcha2_rivotril.jpg", titulo_captcha2, [3, 4, 5, 6, 7])
 
 # ETAPA 4: Mensagem Final (Texto Atualizado)
 elif st.session_state.etapa == 4:
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você é oficialmente uma pessoa curiosa!")
     
-    # --- TEXTO DO ANDRÉ ---
     st.markdown("""
     ### 🚨 RECADO IMPORTANTÍSSIMO DE FÉRIAS! 🏖️
     
@@ -179,4 +196,5 @@ elif st.session_state.etapa == 4:
         st.session_state.etapa = 0
         st.session_state.nome_usuario = ""
         st.session_state.erro_captcha = False
+        st.session_state.input_key = 0
         st.rerun()
