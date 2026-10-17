@@ -73,7 +73,7 @@ if st.session_state.etapa == 0:
             st.warning("Ei, você precisa digitar um nome! Não vale deixar em branco. 😉")
         else:
             st.session_state.nome_usuario = nome_input
-            st.session_state.etapa = 1 # Avança para a tela do Silvio
+            st.session_state.etapa = 1 
             st.rerun()
 
 # ETAPA 1: CONFIRMAÇÃO COM SILVIO SANTOS
@@ -88,13 +88,13 @@ elif st.session_state.etapa == 1:
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Sim, é esse mesmo. ✅", type="primary", use_container_width=True):
-            st.session_state.etapa = 2 # Vai para a tela do "Certa Resposta"
+            st.session_state.etapa = 2 
             st.rerun()
     with col2:
         if st.button("Não, quero corrigir ✏️", use_container_width=True):
-            st.session_state.nome_usuario = "" # Limpa o nome
-            st.session_state.input_key += 1 # Muda a chave para limpar o campo de texto
-            st.session_state.etapa = 0 # Volta para a tela de digitar
+            st.session_state.nome_usuario = "" 
+            st.session_state.input_key += 1 
+            st.session_state.etapa = 0 
             st.rerun()
 
 # ETAPA 2: "CERTA RESPOSTA" (Meme 2)
@@ -145,7 +145,7 @@ elif st.session_state.etapa == 5:
     * 🔋 **53** na disposição
     * 🦴 **84** na coluna
     
-    *Os números são aproximados, mas a coluna já solicitou revisão dos dados.*
+    *Nota metodológica: Segundo dados do IBGE, os números apresentam margem de erro de 2 pontos percentuais para mais ou para menos. Contudo, a coluna do entrevistado já entrou com recurso solicitando revisão imediata dos dados.*
     
     ---
     #### 🏖️ PROGRAMAÇÃO OFICIAL DE FÉRIAS
