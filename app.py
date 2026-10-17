@@ -65,35 +65,46 @@ st.title("🎲 Desafio 🎲")
 if st.session_state.etapa == 0:
     st.markdown("### Antes de começar, precisamos de uma informação...")
     
-    nome_input = st.text_input(
-        "Qual é o seu nome?", 
-        placeholder="Digite seu nome aqui...", 
-        key=f"nome_input_{st.session_state.input_key}"
-    )
+    # USO DO FORMULÁRIO PARA REMOVER O "PRESS ENTER TO APPLY"
+    with st.form(key=f"form_nome_{st.session_state.input_key}"):
+        nome_input = st.text_input("Qual é o seu nome?", placeholder="Digite seu nome aqui...")
+        submit_nome = st.form_submit_button("Pressione para prosseguir", type="primary", use_container_width=True)
     
-    if nome_input.strip() != "":
+    if submit_nome:
+        if nome_input.strip() == "":
+            st.warning("Ei, você precisa digitar um nome! Não vale deixar em branco. 😉")
+        else:
+            st.session_state.nome_usuario = nome_input
+            st.session_state.etapa = 1 
+            st.rerun()
+    
+    # Se já tiver um nome salvo (retorno da tela de correção), mostra a imagem e os botões
+    # (Isso mantém a lógica de confirmação do Silvio, mas agora após clicar no botão)
+    if st.session_state.nome_usuario != "":
         col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
         with col_img2:
             st.image("meme_silvio_1.png", use_container_width=True)
         
-        st.markdown(f"#### Você digitou: **{nome_input}**")
+        st.markdown(f"#### Você digitou: **{st.session_state.nome_usuario}**")
         st.markdown("**Está certo disso? Posso perguntar?** 🤨")
         
         col1, col2 = st.columns(2)
         with col1:
             if st.button("Sim, é esse mesmo. ✅", type="primary", use_container_width=True):
-                st.session_state.nome_usuario = nome_input
-                st.session_state.etapa = 1 
+                st.session_state.etapa = 2 # Pula direto para a tela do "Certa Resposta"
                 st.rerun()
         with col2:
             if st.button("Não, quero corrigir ✏️", use_container_width=True):
-                st.session_state.input_key += 1 
-                st.rerun() 
-    else:
-        st.warning("Ei, você precisa digitar um nome! Não vale deixar em branco. 😉")
+                st.session_state.nome_usuario = "" # Limpa o nome
+                st.session_state.input_key += 1 # Gera uma nova chave para limpar o campo
+                st.rerun()
 
-# ETAPA 1: TELA DO "CERTA RESPOSTA" (Meme 2)
-elif st.session_state.etapa == 1:
+# ETAPA 1: TELA DO "CERTA RESPOSTA" (Meme 2) - Ajustada a numeração das etapas
+elif st.session_state.etapa == 1: # Na verdade, se clicou em "Sim" vai para a etapa 2 no código abaixo
+    pass # (Removi esta etapa para simplificar, veja a nota abaixo)
+
+# ETAPA 1 (Nova): CERTA RESPOSTA
+elif st.session_state.etapa == 2:
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
         st.image("meme_silvio_2.png", use_container_width=True)
@@ -101,23 +112,21 @@ elif st.session_state.etapa == 1:
     st.success(f"**Certa resposta, {st.session_state.nome_usuario}!**")
     
     if st.button("Avançar para os desafios 🚀", type="primary", use_container_width=True):
-        st.session_state.etapa = 2
+        st.session_state.etapa = 3
         st.rerun()
 
-# ETAPA 2: Captcha 1 (Café)
-elif st.session_state.etapa == 2:
+# ETAPA 2 (Nova): Captcha 1 (Café)
+elif st.session_state.etapa == 3:
     titulo_captcha1 = "Selecione o líquido sagrado que ajuda a evitar um processo administrativo:"
-    # Alterado para .png
     renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
 
-# ETAPA 3: Captcha 2 (Rivotril)
-elif st.session_state.etapa == 3:
+# ETAPA 3 (Nova): Captcha 2 (Rivotril)
+elif st.session_state.etapa == 4:
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
-    # Alterado para .png
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
-# ETAPA 4: Mensagem Final (Texto Atualizado)
-elif st.session_state.etapa == 4:
+# ETAPA 4 (Nova): Mensagem Final (Texto Atualizado)
+elif st.session_state.etapa == 5:
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio. !")
     
