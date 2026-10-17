@@ -126,7 +126,7 @@ elif st.session_state.etapa == 4:
     
     *Uma mensagem especial de agradecimento:*
     
-    Poderia ter feito um discurso presencial? Poderia! Mas, como não nasci com o dom da oratória nem com a sabedência da minha "irmã mais nova" — e considerando que a timidez também não colabora muito (sequelas da época em que eu fritava peixe olhando pro gato 🐈🐟) — resolvi inovar e deixar tudo preparado por aqui mesmo!
+    Poderia ter feito um discurso presencial melhor do que eu fiz? Poderia! Mas, como não nasci com o dom da oratória nem com a sabedência da minha "irmã mais nova", Juliana, e considerando que a timidez também não colabora muito (sequelas da época em que eu fritava peixe olhando pro gato 🐈🐟) — resolvi inovar e deixar tudo preparado por aqui mesmo!
     
     **Parabéns! 🎉 Você acaba de desbloquear a conquista: PESSOA CURIOSA!**
     
