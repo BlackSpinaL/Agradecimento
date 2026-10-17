@@ -2,7 +2,7 @@ import streamlit as st
 import time
 
 # Configuração da página
-st.set_page_config(page_title="Presente de Aniversário", layout="centered")
+st.set_page_config(page_title="Agradecimento do André", layout="centered")
 
 # --- ESTADO DA SESSÃO (Controle de fluxo) ---
 if 'etapa' not in st.session_state:
@@ -57,7 +57,8 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
                     st.rerun()
 
 # --- FLUXO DO APLICATIVO ---
-st.title("🎁 Presente de Aniversário do André")
+# TÍTULO ATUALIZADO
+st.title("💌 Agradecimento do André")
 
 # ETAPA 0: TELA DE BOAS-VINDAS (NOME + CONFIRMAÇÃO)
 if st.session_state.etapa == 0:
@@ -98,7 +99,7 @@ elif st.session_state.etapa == 3:
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você é oficialmente uma pessoa curiosa!")
     
-    # --- NOVO TEXTO DO ANDRÉ ---
+    # --- TEXTO DO ANDRÉ ---
     st.markdown("""
     ### 🚨 RECADO IMPORTANTÍSSIMO DE FÉRIAS! 🏖️
     
