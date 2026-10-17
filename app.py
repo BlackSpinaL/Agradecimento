@@ -128,8 +128,6 @@ elif st.session_state.etapa == 4:
     
     Poderia ter feito um discurso presencial melhor do que eu fiz? Poderia! Mas, como não nasci com o dom da oratória nem com a sabedência da minha "irmã mais nova", Juliana, e considerando que a timidez também não colabora muito (sequelas da época em que eu fritava peixe olhando pro gato 🐈🐟) — resolvi inovar e deixar tudo preparado por aqui mesmo!
     
-    **Parabéns! 🎉 Você acaba de desbloquear a conquista: PESSOA CURIOSA!**
-    
     Já que chegou até aqui, está oficialmente convocado(a) para receber meus sinceros agradecimentos. Afinal, curiosidade não mata só o gato… às vezes também garante acesso a um discurso de férias! 😂
     
     Brincadeiras à parte, estou entrando de férias, mas não poderia partir rumo ao meu merecido descanso sem agradecer de coração por todas as mensagens, abraços e presentes de aniversário. Cada gesto de carinho tornou meu dia ainda mais especial. Vocês são demais!
