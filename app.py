@@ -18,7 +18,7 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
     
     col1, col2, col3 = st.columns([1, 6, 1])
     with col2:
-        st.image(caminho_imagem, use_column_width=True)
+        st.image(caminho_imagem, use_container_width=True)
         st.write("**Selecione os quadros corretos:**")
         
         cols = st.columns(3)
@@ -57,45 +57,60 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
                     st.rerun()
 
 # --- FLUXO DO APLICATIVO ---
-# TÍTULO ATUALIZADO
 st.title("💌 Agradecimento do André")
 
-# ETAPA 0: TELA DE BOAS-VINDAS (NOME + CONFIRMAÇÃO)
+# ETAPA 0: TELA DE BOAS-VINDAS (NOME + SILVIO SANTOS)
 if st.session_state.etapa == 0:
     st.markdown("### Antes de começar, precisamos de uma informação...")
     
     nome_input = st.text_input("Qual é o seu nome?", placeholder="Digite seu nome aqui...")
     
+    # Se o usuário digitou algo, mostra o Meme 1 e as opções
     if nome_input.strip() != "":
-        st.markdown(f"#### Olá, **{nome_input}**!")
-        st.markdown("**Tem certeza que é esse o seu nome?** 🤔")
-        st.info("Parece um nome suspeito... Se errar, pode dar problema no RH e o agradecimento vai para outra pessoa! 😂")
+        col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
+        with col_img2:
+            st.image("meme_silvio_1.png", use_container_width=True)
+        
+        st.markdown(f"#### Você digitou: **{nome_input}**")
+        st.markdown("**Está certo disso? Posso perguntar?** 🤨")
         
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("Sim, é esse mesmo! ✅", type="primary", use_container_width=True):
+            if st.button("Sim, é esse mesmo. ✅", type="primary", use_container_width=True):
                 st.session_state.nome_usuario = nome_input
-                st.session_state.etapa = 1
+                st.session_state.etapa = 1  # Avança para a tela do "Certa Resposta"
                 st.rerun()
         with col2:
             if st.button("Não, quero corrigir ✏️", use_container_width=True):
                 st.session_state.nome_usuario = ""
-                st.rerun()
+                st.rerun() # Recarrega a página limpando o campo (na prática, o Streamlit limpa o text_input ao recarregar)
     else:
         st.warning("Ei, você precisa digitar um nome! Não vale deixar em branco. 😉")
 
-# ETAPA 1: Captcha 1 (Café)
+# ETAPA 1: TELA DO "CERTA RESPOSTA" (Meme 2)
 elif st.session_state.etapa == 1:
+    col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
+    with col_img2:
+        st.image("meme_silvio_2.png", use_container_width=True)
+        
+    st.success(f"**Certa resposta, {st.session_state.nome_usuario}!**")
+    
+    if st.button("Avançar para os desafios 🚀", type="primary", use_container_width=True):
+        st.session_state.etapa = 2
+        st.rerun()
+
+# ETAPA 2: Captcha 1 (Café)
+elif st.session_state.etapa == 2:
     titulo_captcha1 = "Selecione o líquido sagrado que ajuda a evitar um processo administrativo:"
     renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
 
-# ETAPA 2: Captcha 2 (Rivotril)
-elif st.session_state.etapa == 2:
+# ETAPA 3: Captcha 2 (Rivotril)
+elif st.session_state.etapa == 3:
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
-# ETAPA 3: Mensagem Final (Texto Atualizado)
-elif st.session_state.etapa == 3:
+# ETAPA 4: Mensagem Final (Texto Atualizado)
+elif st.session_state.etapa == 4:
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você é oficialmente uma pessoa curiosa!")
     
