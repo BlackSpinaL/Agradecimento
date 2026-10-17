@@ -63,7 +63,6 @@ st.title("🎲 Desafio 🎲")
 if st.session_state.etapa == 0:
     st.markdown("### Antes de começar, precisamos de uma informação...")
     
-    # Formulário para evitar o "Press Enter to apply"
     with st.form(key=f"form_nome_{st.session_state.input_key}"):
         nome_input = st.text_input("Qual é o seu nome?", placeholder="Digite seu nome aqui...")
         submit_nome = st.form_submit_button("Pressione para prosseguir", type="primary", use_container_width=True)
@@ -119,12 +118,15 @@ elif st.session_state.etapa == 4:
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
-# ETAPA 5: Mensagem Final
+# ETAPA 5: Mensagem Final (TEXTO JUSTIFICADO)
 elif st.session_state.etapa == 5:
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio!")
     
+    # AQUI ESTÁ O TRUQUE: Abrimos uma div com text-align: justify;
     st.markdown("""
+    <div style="text-align: justify;">
+    
     ### 🚨 RECADO IMPORTANTÍSSIMO DE FÉRIAS! 🏖️
     
     *Uma mensagem especial de agradecimento:*
@@ -180,7 +182,9 @@ elif st.session_state.etapa == 5:
     Um grande abraço a todos, fiquem com Deus e até a volta!
     
     **André ❤️**
-    """)
+    
+    </div>
+    """, unsafe_allow_html=True)
     
     if st.button("Jogar Novamente", type="primary"):
         st.session_state.etapa = 0
