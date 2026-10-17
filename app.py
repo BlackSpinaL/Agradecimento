@@ -2,7 +2,7 @@ import streamlit as st
 import time
 
 # --- CONFIGURAÇÃO DA PÁGINA ---
-st.set_page_config(page_title="Desafio???", layout="centered")
+st.set_page_config(page_title="Desafio", layout="centered")
 
 # --- ESTADO DA SESSÃO ---
 if 'etapa' not in st.session_state:
@@ -45,8 +45,6 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
         with b_col2:
             if st.button("Verificar", type="primary", use_container_width=True):
                 marcados = [i for i, marcado in enumerate(escolhas) if marcado]
-                
-                # Regra fácil: só precisa acertar 3 quadrados corretos
                 acertos = len(set(marcados).intersection(set(quadrados_corretos)))
                 
                 if acertos >= 3: 
@@ -61,11 +59,11 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
 # --- FLUXO DO APLICATIVO ---
 st.title("🎲 Desafio 🎲")
 
-# ETAPA 0: TELA DE BOAS-VINDAS (NOME + SILVIO SANTOS)
+# ETAPA 0: DIGITAR O NOME
 if st.session_state.etapa == 0:
     st.markdown("### Antes de começar, precisamos de uma informação...")
     
-    # USO DO FORMULÁRIO PARA REMOVER O "PRESS ENTER TO APPLY"
+    # Formulário para evitar o "Press Enter to apply"
     with st.form(key=f"form_nome_{st.session_state.input_key}"):
         nome_input = st.text_input("Qual é o seu nome?", placeholder="Digite seu nome aqui...")
         submit_nome = st.form_submit_button("Pressione para prosseguir", type="primary", use_container_width=True)
@@ -75,35 +73,31 @@ if st.session_state.etapa == 0:
             st.warning("Ei, você precisa digitar um nome! Não vale deixar em branco. 😉")
         else:
             st.session_state.nome_usuario = nome_input
-            st.session_state.etapa = 1 
+            st.session_state.etapa = 1 # Avança para a tela do Silvio
             st.rerun()
+
+# ETAPA 1: CONFIRMAÇÃO COM SILVIO SANTOS
+elif st.session_state.etapa == 1:
+    col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
+    with col_img2:
+        st.image("meme_silvio_1.png", use_container_width=True)
     
-    # Se já tiver um nome salvo (retorno da tela de correção), mostra a imagem e os botões
-    # (Isso mantém a lógica de confirmação do Silvio, mas agora após clicar no botão)
-    if st.session_state.nome_usuario != "":
-        col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
-        with col_img2:
-            st.image("meme_silvio_1.png", use_container_width=True)
-        
-        st.markdown(f"#### Você digitou: **{st.session_state.nome_usuario}**")
-        st.markdown("**Está certo disso? Posso perguntar?** 🤨")
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("Sim, é esse mesmo. ✅", type="primary", use_container_width=True):
-                st.session_state.etapa = 2 # Pula direto para a tela do "Certa Resposta"
-                st.rerun()
-        with col2:
-            if st.button("Não, quero corrigir ✏️", use_container_width=True):
-                st.session_state.nome_usuario = "" # Limpa o nome
-                st.session_state.input_key += 1 # Gera uma nova chave para limpar o campo
-                st.rerun()
+    st.markdown(f"#### Você digitou: **{st.session_state.nome_usuario}**")
+    st.markdown("**Está certo disso? Posso perguntar?** 🤨")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Sim, é esse mesmo. ✅", type="primary", use_container_width=True):
+            st.session_state.etapa = 2 # Vai para a tela do "Certa Resposta"
+            st.rerun()
+    with col2:
+        if st.button("Não, quero corrigir ✏️", use_container_width=True):
+            st.session_state.nome_usuario = "" # Limpa o nome
+            st.session_state.input_key += 1 # Muda a chave para limpar o campo de texto
+            st.session_state.etapa = 0 # Volta para a tela de digitar
+            st.rerun()
 
-# ETAPA 1: TELA DO "CERTA RESPOSTA" (Meme 2) - Ajustada a numeração das etapas
-elif st.session_state.etapa == 1: # Na verdade, se clicou em "Sim" vai para a etapa 2 no código abaixo
-    pass # (Removi esta etapa para simplificar, veja a nota abaixo)
-
-# ETAPA 1 (Nova): CERTA RESPOSTA
+# ETAPA 2: "CERTA RESPOSTA" (Meme 2)
 elif st.session_state.etapa == 2:
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
@@ -115,20 +109,20 @@ elif st.session_state.etapa == 2:
         st.session_state.etapa = 3
         st.rerun()
 
-# ETAPA 2 (Nova): Captcha 1 (Café)
+# ETAPA 3: Captcha 1 (Café)
 elif st.session_state.etapa == 3:
     titulo_captcha1 = "Selecione o líquido sagrado que ajuda a evitar um processo administrativo:"
     renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
 
-# ETAPA 3 (Nova): Captcha 2 (Rivotril)
+# ETAPA 4: Captcha 2 (Rivotril)
 elif st.session_state.etapa == 4:
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
-# ETAPA 4 (Nova): Mensagem Final (Texto Atualizado)
+# ETAPA 5: Mensagem Final
 elif st.session_state.etapa == 5:
     st.balloons()
-    st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio. !")
+    st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio!")
     
     st.markdown("""
     ### 🚨 RECADO IMPORTANTÍSSIMO DE FÉRIAS! 🏖️
