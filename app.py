@@ -59,7 +59,7 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
                     st.rerun()
 
 # --- FLUXO DO APLICATIVO ---
-st.title("💌 Mensagem de Agradecimento")
+st.title("🎲 Desafio 🎲")
 
 # ETAPA 0: TELA DE BOAS-VINDAS (NOME + SILVIO SANTOS)
 if st.session_state.etapa == 0:
