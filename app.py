@@ -119,7 +119,7 @@ elif st.session_state.etapa == 3:
 # ETAPA 4: Mensagem Final (Texto Atualizado)
 elif st.session_state.etapa == 4:
     st.balloons()
-    st.success(f"Parabéns, {st.session_state.nome_usuario}! Você é oficialmente uma pessoa curiosa!")
+    st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio. !")
     
     st.markdown("""
     ### 🚨 RECADO IMPORTANTÍSSIMO DE FÉRIAS! 🏖️
