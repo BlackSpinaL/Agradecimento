@@ -172,7 +172,7 @@ elif st.session_state.etapa == 3:
 # ETAPA 4: Captcha 1 (Café)
 elif st.session_state.etapa == 4:
     st.title("🎲 Desafio 🎲")
-    titulo_captcha1 = "Selecione o líquido sagrado que ajuda a evitar um processo administrativo:"
+    titulo_captcha1 = "Marque os quadrados que contêm o combustível oficial do trabalhador brasileiro:"
     renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
 
 # ETAPA 5: Captcha 2 (Rivotril)
