@@ -151,7 +151,6 @@ elif st.session_state.etapa == 2:
 
 # ETAPA 3: "CERTA RESPOSTA" (Meme 2)
 elif st.session_state.etapa == 3:
-    # st.title REMOVIDO DAQUI
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
         st.image("meme_silvio_2.png", use_container_width=True)
@@ -163,19 +162,16 @@ elif st.session_state.etapa == 3:
 
 # ETAPA 4: Captcha 1 (Café)
 elif st.session_state.etapa == 4:
-    # st.title REMOVIDO DAQUI
     titulo_captcha1 = "Marque os quadrados que contêm o combustível oficial do trabalhador brasileiro:"
     renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
 
 # ETAPA 5: Captcha 2 (Rivotril)
 elif st.session_state.etapa == 5:
-    # st.title REMOVIDO DAQUI
     titulo_captcha2 = "Selecione o item que ajuda o trabalhador a manter a sanidade e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
-# ETAPA 6: Mensagem Final (COM O GIF DO CACO)
+# ETAPA 6: Mensagem Final (COM O GIF DO CACO E NOME PERSONALIZADO)
 elif st.session_state.etapa == 6:
-    # st.title REMOVIDO DAQUI
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio!")
     
@@ -188,7 +184,8 @@ elif st.session_state.etapa == 6:
         else:
             st.warning("GIF do Caco não encontrado. Verifique o arquivo.")
     
-    st.markdown("""
+    # O 'f' antes das aspas permite usar a variável do nome no texto
+    st.markdown(f"""
     <div style="text-align: justify;">
     
     ### 🚨 RECADO IMPORTANTÍSSIMO DE FÉRIAS! 🏖️
@@ -210,15 +207,15 @@ elif st.session_state.etapa == 6:
     ---
     #### 🙏 UM AGRADECIMENTO DE CORAÇÃO 🙏
     
-    Que Deus abençoe cada um de vocês, suas famílias e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos. 
+    **{st.session_state.nome_usuario}**, que Deus abençoe você, sua família e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos.
     
     Agora, com o coração agradecido e o corpo (quase) pronto para descansar, encerro este comunicado:
     
     **O servidor se despede, e o cidadão de férias assume o controle! 🏖️😎**
     
-    Um grande abraço a todos, fiquem com Deus e até a volta!
+    Um grande abraço, fique com Deus e até a volta!
     
-    **🤘 André ✌️**
+    **🤘 André Torres ✌️**
     
     </div>
     """, unsafe_allow_html=True)
