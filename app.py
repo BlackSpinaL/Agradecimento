@@ -44,6 +44,7 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
         with b_col1:
             if st.button("Pular", use_container_width=True):
                 st.session_state.etapa += 1
+                st.session_state.limpar_tela = True
                 st.rerun()
         with b_col2:
             if st.button("Verificar", type="primary", use_container_width=True):
@@ -54,6 +55,7 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
                     st.success("Captcha verificado! Avançando...")
                     time.sleep(1)
                     st.session_state.etapa += 1
+                    st.session_state.limpar_tela = True
                     st.rerun()
                 else:
                     st.session_state.erro_captcha = True
@@ -106,37 +108,35 @@ elif st.session_state.etapa == 1:
             st.session_state.limpar_tela = True
             st.rerun()
 
-# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE COM VÍDEO MP4)
+# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE COM AVANÇO AUTOMÁTICO)
 elif st.session_state.etapa == 2:
     st.title("🎲 Desafio 🎲")
     st.markdown("### Preparando a resposta... 🥁")
     
     caminho_video = "contagem.mp4"
-    caminho_gif = "contagem.gif" # Plano B caso você ainda não tenha convertido
     
     if os.path.exists(caminho_video):
         col_vid1, col_vid2, col_vid3 = st.columns([1, 4, 1])
         with col_vid2:
-            # loop=False garante que o vídeo toque uma única vez
-            st.video(caminho_video, autoplay=True, loop=False)
+            # Injetamos o vídeo via HTML para não travar o Python e permitir o autoplay
+            st.markdown(
+                f"""
+                <video width="100%" autoplay muted playsinline>
+                    <source src="{caminho_video}" type="video/mp4">
+                </video>
+                """,
+                unsafe_allow_html=True
+            )
         
-        # Como o vídeo tem player nativo, deixamos um botão para avançar ao final
-        if st.button("Avançar ➡️", type="primary", use_container_width=True):
-            st.session_state.etapa = 3 
-            st.session_state.limpar_tela = True 
-            st.rerun()
-            
-    elif os.path.exists(caminho_gif):
-        col_gif1, col_gif2, col_gif3 = st.columns([1, 4, 1])
-        with col_gif2:
-            st.image(caminho_gif, use_container_width=True)
-        
+        # Tempo de espera para o vídeo rodar. Ajuste conforme a duração do seu MP4.
+        # (10.5 segundos para um vídeo de 10s, garantindo que ele chegue no zero)
         time.sleep(10.5) 
+        
         st.session_state.etapa = 3 
         st.session_state.limpar_tela = True 
         st.rerun()
     else:
-        st.error("Arquivo de contagem não encontrado (nem .mp4, nem .gif).")
+        st.error("Arquivo de contagem.mp4 não encontrado. Verifique o arquivo no GitHub.")
 
 # ETAPA 3: "CERTA RESPOSTA" (Meme 2)
 elif st.session_state.etapa == 3:
