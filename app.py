@@ -63,7 +63,6 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
 
 # --- FLUXO DO APLICATIVO ---
 
-# Limpa a tela para não deixar rastros (botões fantasmas)
 if st.session_state.limpar_tela:
     st.empty() 
     st.session_state.limpar_tela = False 
@@ -110,7 +109,6 @@ elif st.session_state.etapa == 1:
 
 # ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE COM LIMPEZA FORÇADA)
 elif st.session_state.etapa == 2:
-    # 1. Injeção de CSS para esconder o menu e pintar o fundo de branco (mata o botão fantasma)
     st.markdown("""
         <style>
             [data-testid="stSidebar"] { display: none; }
@@ -120,12 +118,10 @@ elif st.session_state.etapa == 2:
         </style>
     """, unsafe_allow_html=True)
     
-    # 2. Pequena pausa de segurança para o navegador processar a limpeza
     placeholder_limpo = st.empty()
     time.sleep(0.3) 
     placeholder_limpo.empty()
     
-    # 3. Exibição do título e do vídeo
     st.title("🎲 Desafio 🎲")
     st.markdown("### Preparando a resposta... 🥁")
     
@@ -134,7 +130,6 @@ elif st.session_state.etapa == 2:
     if os.path.exists(caminho_video):
         col_vid1, col_vid2, col_vid3 = st.columns([1, 4, 1])
         with col_vid2:
-            # CSS para esconder os controles de play/pause do player de vídeo
             st.markdown(
                 """
                 <style>
@@ -144,10 +139,8 @@ elif st.session_state.etapa == 2:
                 """,
                 unsafe_allow_html=True
             )
-            
             st.video(caminho_video, autoplay=True, loop=False)
         
-        # Tempo de espera para o vídeo rodar (ajustado para 11s para garantir o término)
         time.sleep(11) 
         
         st.session_state.etapa = 3 
@@ -158,8 +151,7 @@ elif st.session_state.etapa == 2:
 
 # ETAPA 3: "CERTA RESPOSTA" (Meme 2)
 elif st.session_state.etapa == 3:
-    st.title("🎲 Desafio 🎲")
-    
+    # st.title REMOVIDO DAQUI
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
         st.image("meme_silvio_2.png", use_container_width=True)
@@ -171,26 +163,24 @@ elif st.session_state.etapa == 3:
 
 # ETAPA 4: Captcha 1 (Café)
 elif st.session_state.etapa == 4:
-    st.title("🎲 Desafio 🎲")
+    # st.title REMOVIDO DAQUI
     titulo_captcha1 = "Marque os quadrados que contêm o combustível oficial do trabalhador brasileiro:"
     renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
 
 # ETAPA 5: Captcha 2 (Rivotril)
 elif st.session_state.etapa == 5:
-    st.title("🎲 Desafio 🎲")
-    titulo_captcha2 = "Selecione o produto que ajuda o trabalhador a não surtar e a manter o réu primário:"
+    # st.title REMOVIDO DAQUI
+    titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
 # ETAPA 6: Mensagem Final (COM O GIF DO CACO)
 elif st.session_state.etapa == 6:
-    st.title("🎲 Desafio 🎲")
+    # st.title REMOVIDO DAQUI
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio!")
     
-    # --- GIF DO CACO NO INÍCIO ---
     col_gif1, col_gif2, col_gif3 = st.columns([1, 3, 1])
     with col_gif2:
-        # Tenta carregar o GIF ou JPG do Caco
         if os.path.exists("caco_ferias.gif"):
             st.image("caco_ferias.gif", use_container_width=True)
         elif os.path.exists("caco_ferias.jpg"):
@@ -198,7 +188,6 @@ elif st.session_state.etapa == 6:
         else:
             st.warning("GIF do Caco não encontrado. Verifique o arquivo.")
     
-    # --- TEXTO FINAL ---
     st.markdown("""
     <div style="text-align: justify;">
     
@@ -221,7 +210,7 @@ elif st.session_state.etapa == 6:
     ---
     #### 🙏 UM AGRADECIMENTO DE CORAÇÃO 🙏
     
-    Que Deus abençoe cada um de vocês, suas famílias e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos!
+    Que Deus abençoe cada um de vocês, suas famílias e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos. 
     
     Agora, com o coração agradecido e o corpo (quase) pronto para descansar, encerro este comunicado:
     
