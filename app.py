@@ -223,8 +223,6 @@ elif st.session_state.etapa == 6:
     
     Que Deus abençoe cada um de vocês, suas famílias e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos!
     
-    Obrigado mais uma vez pelo carinho e por fazerem parte de momentos tão especiais da minha vida.
-    
     Agora, com o coração agradecido e o corpo (quase) pronto para descansar, encerro este comunicado:
     
     **O servidor se despede, e o cidadão de férias assume o controle! 🏖️😎**
