@@ -164,12 +164,24 @@ elif st.session_state.etapa == 5:
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
-# ETAPA 6: Mensagem Final (NOVO TEXTO)
+# ETAPA 6: Mensagem Final (COM O GIF DO CACO NO INÍCIO)
 elif st.session_state.etapa == 6:
     st.title("🎲 Desafio 🎲")
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio!")
     
+    # --- GIF DO CACO ---
+    col_gif1, col_gif2, col_gif3 = st.columns([1, 3, 1])
+    with col_gif2:
+        # Exibe o GIF. Se for .mp4, use st.video("caco_ferias.mp4", autoplay=True, loop=True)
+        if os.path.exists("caco_ferias.gif"):
+            st.image("caco_ferias.gif", use_container_width=True)
+        elif os.path.exists("caco_ferias.jpg"):
+            st.image("caco_ferias.jpg", use_container_width=True)
+        else:
+            st.warning("GIF do Caco não encontrado. Verifique o arquivo.")
+    
+    # --- TEXTO ---
     st.markdown("""
     <div style="text-align: justify;">
     
