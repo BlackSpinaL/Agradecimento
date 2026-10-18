@@ -76,9 +76,10 @@ if st.session_state.etapa == 0:
             st.session_state.etapa = 1 
             st.rerun()
 
-# ETAPA 1: CONFIRMAÇÃO COM SILVIO SANTOS
+# ETAPA 1: CONFIRMAÇÃO COM SILVIO SANTOS 1
 elif st.session_state.etapa == 1:
-    st.markdown(f"#### Você digitou: **{st.session_state.nome_usuario}**")
+    # Texto atualizado
+    st.markdown("<h3 style='text-align: center;'>🕵️ Oh criatura, esse é o seu nome mesmo?</h3>", unsafe_allow_html=True)
     
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
@@ -96,40 +97,19 @@ elif st.session_state.etapa == 1:
             st.session_state.etapa = 0 
             st.rerun()
 
-# ETAPA 2: "CERTA RESPOSTA" (Meme 2)
+# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE ANTES DO CERTA RESPOSTA)
 elif st.session_state.etapa == 2:
-    col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
-    with col_img2:
-        st.image("meme_silvio_2.png", use_container_width=True)
-        
-    if st.button("Avançar para os desafios 🚀", type="primary", use_container_width=True):
-        st.session_state.etapa = 3
-        st.rerun()
-
-# ETAPA 3: Captcha 1 (Café)
-elif st.session_state.etapa == 3:
-    titulo_captcha1 = "Selecione o líquido sagrado que ajuda a evitar um processo administrativo:"
-    renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
-
-# ETAPA 4: Captcha 2 (Rivotril)
-elif st.session_state.etapa == 4:
-    titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
-    renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
-
-# ETAPA 5: CONTAGEM REGRESSIVA (SUSPENSE) COM GIF
-elif st.session_state.etapa == 5:
-    st.markdown("### Preparando o grande final... 🥁")
+    st.markdown("### Preparando a resposta... 🥁")
     
     caminho_gif = "contagem.gif"
     
-    # Se o GIF existir, exibe ele e espera 3 segundos (tempo estimado do GIF rodar)
     if os.path.exists(caminho_gif):
         col_gif1, col_gif2, col_gif3 = st.columns([1, 4, 1])
         with col_gif2:
             st.image(caminho_gif, use_container_width=True)
-        time.sleep(3) # Tempo de duração do suspense (ajuste se o GIF for mais longo)
+        time.sleep(10) # Tempo de duração do seu GIF (10 segundos)
     else:
-        # Fallback: Se o GIF não existir, faz a contagem numérica
+        # Plano B: Se o GIF não for encontrado, faz uma contagem simples de 3 a 1
         placeholder = st.empty()
         for i in range(3, 0, -1):
             with placeholder.container():
@@ -137,9 +117,28 @@ elif st.session_state.etapa == 5:
             time.sleep(1)
         placeholder.empty()
     
-    # Avança para a mensagem final
-    st.session_state.etapa = 6
+    st.session_state.etapa = 3 
     st.rerun()
+
+# ETAPA 3: "CERTA RESPOSTA" (Meme 2)
+elif st.session_state.etapa == 3:
+    col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
+    with col_img2:
+        st.image("meme_silvio_2.png", use_container_width=True)
+        
+    if st.button("Avançar para os desafios 🚀", type="primary", use_container_width=True):
+        st.session_state.etapa = 4
+        st.rerun()
+
+# ETAPA 4: Captcha 1 (Café)
+elif st.session_state.etapa == 4:
+    titulo_captcha1 = "Selecione o líquido sagrado que ajuda a evitar um processo administrativo:"
+    renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
+
+# ETAPA 5: Captcha 2 (Rivotril)
+elif st.session_state.etapa == 5:
+    titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
+    renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
 # ETAPA 6: Mensagem Final (TEXTO JUSTIFICADO)
 elif st.session_state.etapa == 6:
