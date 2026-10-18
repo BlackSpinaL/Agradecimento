@@ -118,8 +118,7 @@ elif st.session_state.etapa == 2:
     if os.path.exists(caminho_video):
         col_vid1, col_vid2, col_vid3 = st.columns([1, 4, 1])
         with col_vid2:
-            # Injeta CSS para esconder os controles do vídeo (play, pause, volume)
-            # Assim ele fica parecendo um GIF, mas usa a tecnologia do player nativo.
+            # Injeta CSS para esconder os controles do vídeo
             st.markdown(
                 """
                 <style>
@@ -130,10 +129,8 @@ elif st.session_state.etapa == 2:
                 unsafe_allow_html=True
             )
             
-            # O player nativo do Streamlit, mas sem os controles visíveis
             st.video(caminho_video, autoplay=True, loop=False)
         
-        # O código do Python espera o tempo do vídeo rodar e avança sozinho
         time.sleep(10.5) 
         
         st.session_state.etapa = 3 
@@ -167,7 +164,7 @@ elif st.session_state.etapa == 5:
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
-# ETAPA 6: Mensagem Final (TEXTO JUSTIFICADO)
+# ETAPA 6: Mensagem Final (NOVO TEXTO)
 elif st.session_state.etapa == 6:
     st.title("🎲 Desafio 🎲")
     st.balloons()
@@ -178,15 +175,9 @@ elif st.session_state.etapa == 6:
     
     ### 🚨 RECADO IMPORTANTÍSSIMO DE FÉRIAS! 🏖️
     
-    *Uma mensagem especial de agradecimento:*
+    Poderia ter feito um discurso presencial melhor ao receber os presentes na sexta-feira? Poderia! 😂 Mas, como a oratória não é meu forte e a timidez ainda atrapalha (sequelas da época em que eu fritava peixe olhando pro gato 🐈🐟), resolvi inovar e deixar meu agradecimento registrado por aqui mesmo!
     
-    Poderia ter feito um discurso presencial melhor do que eu fiz? Poderia! Mas, como não nasci com o dom da oratória nem com a sabedência da minha "irmã mais nova", Juliana, e considerando que a timidez também não colabora muito (sequelas da época em que eu fritava peixe olhando pro gato 🐈🐟) — resolvi inovar e deixar tudo preparado por aqui mesmo!
-    
-    Já que chegou até aqui, está oficialmente convocado(a) para receber meus sinceros agradecimentos. Afinal, curiosidade não mata só o gato… às vezes também garante acesso a um discurso de férias! 😂
-    
-    Brincadeiras à parte, estou entrando de férias, mas não poderia partir rumo ao meu merecido descanso sem agradecer de coração por todas as mensagens, abraços e presentes de aniversário. Cada gesto de carinho tornou meu dia ainda mais especial. Vocês são demais!
-    
-    Obrigado por lembrarem de mim, pelo carinho de sempre e, principalmente, por colaborarem com a minha autoestima, fingindo que eu não estou ficando mais velho! 🤣❤️
+    Quero agradecer de coração pelas mensagens, pelos abraços e pelos presentes de aniversário. Cada gesto de carinho tornou meu dia ainda mais especial. Vocês são demais! ❤️
     
     ---
     #### 📊 BOLETIM OFICIAL DA IDADE DO ANDRÉ
@@ -196,41 +187,22 @@ elif st.session_state.etapa == 6:
     * 🔋 **53** na disposição
     * 🦴 **84** na coluna
     
-    *Nota metodológica: Segundo dados do IBGE, os números apresentam margem de erro de 2 pontos percentuais para mais ou para menos. Contudo, a coluna do entrevistado já entrou com recurso solicitando revisão imediata dos dados.*
+    *Dados com margem de erro de 2 pontos, segundo o IBGE da minha imaginação. A coluna já entrou com recurso! 😂*
     
     ---
-    #### 🏖️ PROGRAMAÇÃO OFICIAL DE FÉRIAS
+    #### 🙏 UM AGRADECIMENTO DE CORAÇÃO 🙏
     
-    Após longos períodos de trabalho, compromissos e responsabilidades, informo que meu departamento de produtividade entrará em recesso por tempo indeterminado (ou até o despertador voltar a ser necessário).
+    Que Deus abençoe cada um de vocês, suas famílias e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos!
     
-    **😴 1. Sono sem Despertador**
-    Acordar ao meio-dia, com cara de quem enfrentou três turnos de trabalho, roupa amarrotada e nenhuma preocupação com horários. O despertador está oficialmente desligado, e qualquer tentativa de contato antes do meio-dia será considerada uma ameaça à paz mundial!
+    Obrigado mais uma vez pelo carinho e por fazerem parte de momentos tão especiais da minha vida.
     
-    **📺 2. Sessão Maratona: O Sofá é Meu Escritório**
-    Deitado na cama, assistindo Lagoa Azul, além de filmes e séries até a TV perguntar: “Você ainda está assistindo?”. Sim, minha filha! E, se depender de mim, vou assistir até o controle remoto pedir férias também!
+    Agora, com o coração agradecido e o corpo (quase) pronto para descansar, encerro este comunicado:
     
-    **🔴⚫ 3. Mengão no Sofá: Emoção, Raiva e Sofrimento**
-    Torcer pelo Flamengo com energia máxima, sentado confortavelmente no sofá, porque passar raiva em pé é um esforço desnecessário. O coração descansa, mas o Mengão nem sempre colabora! 😂
-    
-    **🐔 4. Vida no quintal: Meu Novo Cargo é Cuidador de Galinhas**
-    Cuidar das galinhas, ouvir cacarejos durante o dia inteiro e tentar entender se elas estão conversando, reclamando ou organizando uma reunião para falar mal de mim. Pelo menos, nesse setor, ninguém marca reunião no Teams!
-    
-    ---
-    #### 🙏 UMA MENSAGEM DE CORAÇÃO
-    
-    Que Deus abençoe sua vida, sua família e seus caminhos. Que sua semana seja repleta de paz, saúde, alegria e das infinitas graças e bênçãos do Senhor!
-    
-    E lembre-se: se espirrar… saúde, Deus te cria 😂🙏
-    
-    Obrigado mais uma vez pelo carinho, pelos presentes e por fazerem parte de momentos tão especiais da minha vida.
-    
-    Agora, com o coração agradecido e o corpo (quase) pronto para o descanso, encerro este comunicado.
-    
-    **O servidor se despede e o cidadão de férias assume o controle! 🏖️😎**
+    **O servidor se despede, e o cidadão de férias assume o controle! 🏖️😎**
     
     Um grande abraço a todos, fiquem com Deus e até a volta!
     
-    **André ❤️**
+    **🤘 André ✌️**
     
     </div>
     """, unsafe_allow_html=True)
