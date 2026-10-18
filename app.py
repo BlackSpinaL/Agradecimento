@@ -14,7 +14,6 @@ if 'erro_captcha' not in st.session_state:
     st.session_state.erro_captcha = False
 if 'input_key' not in st.session_state:
     st.session_state.input_key = 0 
-# Nova variável para controlar a limpeza de tela
 if 'limpar_tela' not in st.session_state:
     st.session_state.limpar_tela = False
 
@@ -30,7 +29,7 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
         cols = st.columns(3)
         escolhas = []
         
-        for i in range(11):
+        for i in range(9):
             with cols[i % 3]:
                 escolha = st.checkbox(f"Quadro {i+1}", key=f"check_{st.session_state.etapa}_{i}")
                 escolhas.append(escolha)
@@ -62,10 +61,10 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
 
 # --- FLUXO DO APLICATIVO ---
 
-# TRUQUE DE MESTRE: Se a flag de limpar tela estiver ativa, limpamos o título antigo também
+# TRUQUE DE MESTRE: Limpa a tela antiga se a flag estiver ativa
 if st.session_state.limpar_tela:
-    st.empty() # Força o Streamlit a limpar os elementos anteriores
-    st.session_state.limpar_tela = False # Desativa a flag
+    st.empty() 
+    st.session_state.limpar_tela = False 
 else:
     st.title("🎲 Desafio 🎲")
 
@@ -97,35 +96,47 @@ elif st.session_state.etapa == 1:
     with col1:
         if st.button("Sim, é esse mesmo. ✅", type="primary", use_container_width=True):
             st.session_state.etapa = 2 
-            st.session_state.limpar_tela = True # Ativa a limpeza total
+            st.session_state.limpar_tela = True 
             st.rerun()
     with col2:
         if st.button("Não, quero corrigir ✏️", use_container_width=True):
             st.session_state.nome_usuario = "" 
             st.session_state.input_key += 1 
             st.session_state.etapa = 0 
+            st.session_state.limpar_tela = True
             st.rerun()
 
-# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE)
+# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE COM VÍDEO MP4)
 elif st.session_state.etapa == 2:
-    st.title("🎲 Desafio 🎲") # Título recolocado após a limpeza
+    st.title("🎲 Desafio 🎲")
     st.markdown("### Preparando a resposta... 🥁")
     
-    caminho_gif = "contagem.gif"
+    caminho_video = "contagem.mp4"
+    caminho_gif = "contagem.gif" # Plano B caso você ainda não tenha convertido
     
-    if os.path.exists(caminho_gif):
+    if os.path.exists(caminho_video):
+        col_vid1, col_vid2, col_vid3 = st.columns([1, 4, 1])
+        with col_vid2:
+            # loop=False garante que o vídeo toque uma única vez
+            st.video(caminho_video, autoplay=True, loop=False)
+        
+        # Como o vídeo tem player nativo, deixamos um botão para avançar ao final
+        if st.button("Avançar ➡️", type="primary", use_container_width=True):
+            st.session_state.etapa = 3 
+            st.session_state.limpar_tela = True 
+            st.rerun()
+            
+    elif os.path.exists(caminho_gif):
         col_gif1, col_gif2, col_gif3 = st.columns([1, 4, 1])
         with col_gif2:
             st.image(caminho_gif, use_container_width=True)
+        
+        time.sleep(10.5) 
+        st.session_state.etapa = 3 
+        st.session_state.limpar_tela = True 
+        st.rerun()
     else:
-        st.warning("GIF não encontrado. Verifique o arquivo.")
-    
-    # Tempo para o GIF rodar (11 segundos para garantir o 10 completo)
-    time.sleep(11)
-    
-    st.session_state.etapa = 3 
-    st.session_state.limpar_tela = True # Limpa o GIF antes do Certa Resposta
-    st.rerun()
+        st.error("Arquivo de contagem não encontrado (nem .mp4, nem .gif).")
 
 # ETAPA 3: "CERTA RESPOSTA" (Meme 2)
 elif st.session_state.etapa == 3:
