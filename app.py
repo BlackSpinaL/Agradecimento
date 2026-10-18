@@ -30,7 +30,7 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
         cols = st.columns(3)
         escolhas = []
         
-        for i in range(10):
+        for i in range(11):
             with cols[i % 3]:
                 escolha = st.checkbox(f"Quadro {i+1}", key=f"check_{st.session_state.etapa}_{i}")
                 escolhas.append(escolha)
