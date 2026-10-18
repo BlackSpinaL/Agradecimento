@@ -96,28 +96,31 @@ elif st.session_state.etapa == 1:
             st.session_state.etapa = 0 
             st.rerun()
 
-# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE ANTES DO CERTA RESPOSTA)
+# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE)
 elif st.session_state.etapa == 2:
-    # Cria um container vazio para isolar o GIF e limpar a tela depois
+    # Cria um container vazio que isola TUDO
     placeholder = st.empty()
     
     with placeholder.container():
-        st.markdown("### Preparando a resposta... 🥁")
-        
-        caminho_gif = "contagem.gif"
-        
-        if os.path.exists(caminho_gif):
-            col_gif1, col_gif2, col_gif3 = st.columns([1, 4, 1])
-            with col_gif2:
-                st.image(caminho_gif, use_container_width=True)
-        else:
-            st.warning("GIF não encontrado. Verifique o arquivo.")
+        # O st.form evita que o Streamlit recarregue no meio da animação
+        with st.form("form_contagem"):
+            st.markdown("### Preparando a resposta... 🥁")
+            
+            caminho_gif = "contagem.gif"
+            
+            if os.path.exists(caminho_gif):
+                col_gif1, col_gif2, col_gif3 = st.columns([1, 4, 1])
+                with col_gif2:
+                    st.image(caminho_gif, use_container_width=True)
+            else:
+                st.warning("GIF não encontrado.")
+            
+            # Tempo para o GIF rodar. Como o seu tem 10s, colocamos 11s para garantir.
+            time.sleep(11)
     
-    # Tempo de espera para o GIF rodar (ajustado para 11 segundos)
-    time.sleep(11) 
-    
-    # Limpa a tela (remove o GIF e os botões antigos) e avança
+    # Limpa o formulário inteiro (GIF + botão invisível) da memória
     placeholder.empty()
+    
     st.session_state.etapa = 3 
     st.rerun()
 
