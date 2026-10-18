@@ -207,7 +207,7 @@ elif st.session_state.etapa == 6:
     ---
     #### 🙏 UM AGRADECIMENTO DE CORAÇÃO 🙏
     
-    <strong>{st.session_state.nome_usuario}</strong>, que Deus abençoe você, sua família e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos.
+    <strong>{st.session_state.nome_usuario},</strong> que Deus abençoe você, sua família e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos.
     
     Agora, com o coração agradecido e o corpo (quase) pronto para descansar, encerro este comunicado:
     
