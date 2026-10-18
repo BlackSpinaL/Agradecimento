@@ -27,7 +27,7 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
         cols = st.columns(3)
         escolhas = []
         
-        for i in range(11):
+        for i in range(9):
             with cols[i % 3]:
                 escolha = st.checkbox(f"Quadro {i+1}", key=f"check_{st.session_state.etapa}_{i}")
                 escolhas.append(escolha)
@@ -78,7 +78,6 @@ if st.session_state.etapa == 0:
 
 # ETAPA 1: CONFIRMAÇÃO COM SILVIO SANTOS 1
 elif st.session_state.etapa == 1:
-    # Texto atualizado
     st.markdown("<h3 style='text-align: center;'>🕵️ Oh criatura, esse é o seu nome mesmo?</h3>", unsafe_allow_html=True)
     
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
@@ -99,24 +98,26 @@ elif st.session_state.etapa == 1:
 
 # ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE ANTES DO CERTA RESPOSTA)
 elif st.session_state.etapa == 2:
-    st.markdown("### Preparando a resposta... 🥁")
+    # Cria um container vazio para isolar o GIF e limpar a tela depois
+    placeholder = st.empty()
     
-    caminho_gif = "contagem.gif"
+    with placeholder.container():
+        st.markdown("### Preparando a resposta... 🥁")
+        
+        caminho_gif = "contagem.gif"
+        
+        if os.path.exists(caminho_gif):
+            col_gif1, col_gif2, col_gif3 = st.columns([1, 4, 1])
+            with col_gif2:
+                st.image(caminho_gif, use_container_width=True)
+        else:
+            st.warning("GIF não encontrado. Verifique o arquivo.")
     
-    if os.path.exists(caminho_gif):
-        col_gif1, col_gif2, col_gif3 = st.columns([1, 4, 1])
-        with col_gif2:
-            st.image(caminho_gif, use_container_width=True)
-        time.sleep(9) # Tempo de duração do seu GIF (10 segundos)
-    else:
-        # Plano B: Se o GIF não for encontrado, faz uma contagem simples de 3 a 1
-        placeholder = st.empty()
-        for i in range(3, 0, -1):
-            with placeholder.container():
-                st.markdown(f"<h1 style='text-align: center; font-size: 100px;'>{i}</h1>", unsafe_allow_html=True)
-            time.sleep(1)
-        placeholder.empty()
+    # Tempo de espera para o GIF rodar (ajustado para 11 segundos)
+    time.sleep(11) 
     
+    # Limpa a tela (remove o GIF e os botões antigos) e avança
+    placeholder.empty()
     st.session_state.etapa = 3 
     st.rerun()
 
@@ -202,7 +203,7 @@ elif st.session_state.etapa == 6:
     
     Um grande abraço a todos, fiquem com Deus e até a volta!
     
-    **André ✌️🤘 **
+    **André ❤️**
     
     </div>
     """, unsafe_allow_html=True)
