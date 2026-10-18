@@ -107,7 +107,7 @@ elif st.session_state.etapa == 2:
         col_gif1, col_gif2, col_gif3 = st.columns([1, 4, 1])
         with col_gif2:
             st.image(caminho_gif, use_container_width=True)
-        time.sleep(10) # Tempo de duração do seu GIF (10 segundos)
+        time.sleep(9) # Tempo de duração do seu GIF (10 segundos)
     else:
         # Plano B: Se o GIF não for encontrado, faz uma contagem simples de 3 a 1
         placeholder = st.empty()
