@@ -202,7 +202,7 @@ elif st.session_state.etapa == 6:
     
     Um grande abraço a todos, fiquem com Deus e até a volta!
     
-    **André ❤️**
+    **André ✌️🤘 **
     
     </div>
     """, unsafe_allow_html=True)
