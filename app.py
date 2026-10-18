@@ -170,7 +170,7 @@ elif st.session_state.etapa == 4:
 # ETAPA 5: Captcha 2 (Rivotril)
 elif st.session_state.etapa == 5:
     # st.title REMOVIDO DAQUI
-    titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
+    titulo_captcha2 = "Selecione o item que ajuda o trabalhador a manter a sanidade e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
 # ETAPA 6: Mensagem Final (COM O GIF DO CACO)
