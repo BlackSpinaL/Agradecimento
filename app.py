@@ -167,7 +167,6 @@ elif st.session_state.etapa == 4:
 
 # ETAPA 5: Captcha 2 (Rivotril)
 elif st.session_state.etapa == 5:
-    # Título mantido com a sua alteração
     titulo_captcha2 = "Marque os quadrados que contêm o remédio que ajuda o trabalhador a manter a sanidade e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
@@ -184,6 +183,9 @@ elif st.session_state.etapa == 6:
             st.image("caco_ferias.jpg", use_container_width=True)
         else:
             st.warning("GIF do Caco não encontrado. Verifique o arquivo.")
+    
+    # SOLUÇÃO DA VÍRGULA: Juntamos o nome e a vírgula na variável
+    nome_formatado = f"**{st.session_state.nome_usuario},**"
     
     st.markdown(f"""
     <div style="text-align: justify;">
@@ -207,7 +209,7 @@ elif st.session_state.etapa == 6:
     ---
     #### 🙏 UM AGRADECIMENTO DE CORAÇÃO 🙏
     
-    <p style="margin: 0; padding: 0;"><b>{st.session_state.nome_usuario},</b> que Deus abençoe você, sua família e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos.</p>
+    {nome_formatado} que Deus abençoe você, sua família e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos.
     
     Agora, com o coração agradecido e o corpo (quase) pronto para descansar, encerro este comunicado:
     
