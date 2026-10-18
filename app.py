@@ -167,7 +167,7 @@ elif st.session_state.etapa == 4:
 
 # ETAPA 5: Captcha 2 (Rivotril)
 elif st.session_state.etapa == 5:
-    titulo_captcha2 = "Selecione o item que ajuda o trabalhador a manter a sanidade e não perder o réu primário:"
+    titulo_captcha2 = "Marque os quadrados que contêm o remédio que ajuda o trabalhador a manter a sanidade e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
 # ETAPA 6: Mensagem Final (COM O GIF DO CACO E NOME PERSONALIZADO)
@@ -207,7 +207,7 @@ elif st.session_state.etapa == 6:
     ---
     #### 🙏 UM AGRADECIMENTO DE CORAÇÃO 🙏
     
-    <strong>{st.session_state.nome_usuario},</strong> que Deus abençoe você, sua família e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos.
+    <span style="font-weight: bold; margin-right: 0; padding-right: 0;">{st.session_state.nome_usuario},</span> que Deus abençoe você, sua família e seus caminhos, com muita saúde, paz, alegria e infinitas bênçãos.
     
     Agora, com o coração agradecido e o corpo (quase) pronto para descansar, encerro este comunicado:
     
