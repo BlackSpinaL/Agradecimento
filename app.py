@@ -77,15 +77,12 @@ if st.session_state.etapa == 0:
 
 # ETAPA 1: CONFIRMAÇÃO COM SILVIO SANTOS
 elif st.session_state.etapa == 1:
-    # Texto movido para cima da imagem
     st.markdown(f"#### Você digitou: **{st.session_state.nome_usuario}**")
     
-    # Imagem centralizada
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
         st.image("meme_silvio_1.png", use_container_width=True)
     
-    # Pergunta redundante removida, indo direto para os botões
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Sim, é esse mesmo. ✅", type="primary", use_container_width=True):
@@ -98,13 +95,14 @@ elif st.session_state.etapa == 1:
             st.session_state.etapa = 0 
             st.rerun()
 
-# ETAPA 2: "CERTA RESPOSTA" (Meme 2)
+# ETAPA 2: "CERTA RESPOSTA" (Meme 2) - AGORA SEM TEXTO REDUNDANTE
 elif st.session_state.etapa == 2:
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
         st.image("meme_silvio_2.png", use_container_width=True)
         
-    st.success(f"**Certa resposta, {st.session_state.nome_usuario}!**")
+    # Texto de sucesso removido para não ser redundante com a imagem
+    # st.success(f"**Certa resposta, {st.session_state.nome_usuario}!**")
     
     if st.button("Avançar para os desafios 🚀", type="primary", use_container_width=True):
         st.session_state.etapa = 3
@@ -120,8 +118,31 @@ elif st.session_state.etapa == 4:
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
-# ETAPA 5: Mensagem Final (TEXTO JUSTIFICADO)
+# ETAPA 5: CONTAGEM REGRESSIVA (SUSPENSE)
 elif st.session_state.etapa == 5:
+    st.markdown("### Preparando o grande final... 🥁")
+    
+    # Criamos um espaço vazio que será preenchido com a contagem
+    placeholder = st.empty()
+    
+    # Faz a contagem de 3 a 1
+    for i in range(3, 0, -1):
+        with placeholder.container():
+            # Exibe a imagem do GIF (ou um número grande se você não tiver o GIF)
+            # st.image("contagem.gif", use_container_width=True) 
+            
+            # Caso não tenha o GIF ainda, use este número grande como teste:
+            st.markdown(f"<h1 style='text-align: center; font-size: 100px;'>{i}</h1>", unsafe_allow_html=True)
+            
+        time.sleep(1) # Espera 1 segundo
+    
+    # Limpa a tela de contagem e avança
+    placeholder.empty()
+    st.session_state.etapa = 6
+    st.rerun()
+
+# ETAPA 6: Mensagem Final (TEXTO JUSTIFICADO)
+elif st.session_state.etapa == 6:
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio!")
     
