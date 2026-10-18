@@ -63,7 +63,7 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
 
 # --- FLUXO DO APLICATIVO ---
 
-# TRUQUE DE MESTRE: Limpa a tela antiga se a flag estiver ativa
+# Limpa a tela para não deixar rastros (botões fantasmas)
 if st.session_state.limpar_tela:
     st.empty() 
     st.session_state.limpar_tela = False 
@@ -108,7 +108,7 @@ elif st.session_state.etapa == 1:
             st.session_state.limpar_tela = True
             st.rerun()
 
-# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE COM AVANÇO AUTOMÁTICO)
+# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE COM VÍDEO)
 elif st.session_state.etapa == 2:
     st.title("🎲 Desafio 🎲")
     st.markdown("### Preparando a resposta... 🥁")
@@ -118,25 +118,29 @@ elif st.session_state.etapa == 2:
     if os.path.exists(caminho_video):
         col_vid1, col_vid2, col_vid3 = st.columns([1, 4, 1])
         with col_vid2:
-            # Injetamos o vídeo via HTML para não travar o Python e permitir o autoplay
+            # Injeta CSS para esconder os controles do vídeo (play, pause, volume)
+            # Assim ele fica parecendo um GIF, mas usa a tecnologia do player nativo.
             st.markdown(
-                f"""
-                <video width="100%" autoplay muted playsinline>
-                    <source src="{caminho_video}" type="video/mp4">
-                </video>
+                """
+                <style>
+                    video::-webkit-media-controls { display:none !important; }
+                    video::-webkit-media-controls-enclosure { display:none !important; }
+                </style>
                 """,
                 unsafe_allow_html=True
             )
+            
+            # O player nativo do Streamlit, mas sem os controles visíveis
+            st.video(caminho_video, autoplay=True, loop=False)
         
-        # Tempo de espera para o vídeo rodar. Ajuste conforme a duração do seu MP4.
-        # (10.5 segundos para um vídeo de 10s, garantindo que ele chegue no zero)
+        # O código do Python espera o tempo do vídeo rodar e avança sozinho
         time.sleep(10.5) 
         
         st.session_state.etapa = 3 
         st.session_state.limpar_tela = True 
         st.rerun()
     else:
-        st.error("Arquivo de contagem.mp4 não encontrado. Verifique o arquivo no GitHub.")
+        st.error("Arquivo contagem.mp4 não encontrado.")
 
 # ETAPA 3: "CERTA RESPOSTA" (Meme 2)
 elif st.session_state.etapa == 3:
