@@ -108,8 +108,24 @@ elif st.session_state.etapa == 1:
             st.session_state.limpar_tela = True
             st.rerun()
 
-# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE COM VÍDEO)
+# ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE COM LIMPEZA FORÇADA)
 elif st.session_state.etapa == 2:
+    # 1. Injeção de CSS para esconder o menu e pintar o fundo de branco (mata o botão fantasma)
+    st.markdown("""
+        <style>
+            [data-testid="stSidebar"] { display: none; }
+            #MainMenu { visibility: hidden; }
+            header { visibility: hidden; }
+            .stApp { background-color: #FFFFFF; }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    # 2. Pequena pausa de segurança para o navegador processar a limpeza
+    placeholder_limpo = st.empty()
+    time.sleep(0.3) 
+    placeholder_limpo.empty()
+    
+    # 3. Exibição do título e do vídeo
     st.title("🎲 Desafio 🎲")
     st.markdown("### Preparando a resposta... 🥁")
     
@@ -118,7 +134,7 @@ elif st.session_state.etapa == 2:
     if os.path.exists(caminho_video):
         col_vid1, col_vid2, col_vid3 = st.columns([1, 4, 1])
         with col_vid2:
-            # Injeta CSS para esconder os controles do vídeo
+            # CSS para esconder os controles de play/pause do player de vídeo
             st.markdown(
                 """
                 <style>
@@ -131,7 +147,8 @@ elif st.session_state.etapa == 2:
             
             st.video(caminho_video, autoplay=True, loop=False)
         
-        time.sleep(10.5) 
+        # Tempo de espera para o vídeo rodar (ajustado para 11s para garantir o término)
+        time.sleep(11) 
         
         st.session_state.etapa = 3 
         st.session_state.limpar_tela = True 
@@ -164,16 +181,16 @@ elif st.session_state.etapa == 5:
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
-# ETAPA 6: Mensagem Final (COM O GIF DO CACO NO INÍCIO)
+# ETAPA 6: Mensagem Final (COM O GIF DO CACO)
 elif st.session_state.etapa == 6:
     st.title("🎲 Desafio 🎲")
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio!")
     
-    # --- GIF DO CACO ---
+    # --- GIF DO CACO NO INÍCIO ---
     col_gif1, col_gif2, col_gif3 = st.columns([1, 3, 1])
     with col_gif2:
-        # Exibe o GIF. Se for .mp4, use st.video("caco_ferias.mp4", autoplay=True, loop=True)
+        # Tenta carregar o GIF ou JPG do Caco
         if os.path.exists("caco_ferias.gif"):
             st.image("caco_ferias.gif", use_container_width=True)
         elif os.path.exists("caco_ferias.jpg"):
@@ -181,7 +198,7 @@ elif st.session_state.etapa == 6:
         else:
             st.warning("GIF do Caco não encontrado. Verifique o arquivo.")
     
-    # --- TEXTO ---
+    # --- TEXTO FINAL ---
     st.markdown("""
     <div style="text-align: justify;">
     
