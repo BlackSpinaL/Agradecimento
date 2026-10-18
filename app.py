@@ -77,13 +77,15 @@ if st.session_state.etapa == 0:
 
 # ETAPA 1: CONFIRMAÇÃO COM SILVIO SANTOS
 elif st.session_state.etapa == 1:
+    # Texto movido para cima da imagem
+    st.markdown(f"#### Você digitou: **{st.session_state.nome_usuario}**")
+    
+    # Imagem centralizada
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
         st.image("meme_silvio_1.png", use_container_width=True)
     
-    st.markdown(f"#### Você digitou: **{st.session_state.nome_usuario}**")
-    st.markdown("**Está certo disso? Posso perguntar?** 🤨")
-    
+    # Pergunta redundante removida, indo direto para os botões
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Sim, é esse mesmo. ✅", type="primary", use_container_width=True):
@@ -123,7 +125,6 @@ elif st.session_state.etapa == 5:
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio!")
     
-    # AQUI ESTÁ O TRUQUE: Abrimos uma div com text-align: justify;
     st.markdown("""
     <div style="text-align: justify;">
     
