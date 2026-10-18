@@ -14,6 +14,9 @@ if 'erro_captcha' not in st.session_state:
     st.session_state.erro_captcha = False
 if 'input_key' not in st.session_state:
     st.session_state.input_key = 0 
+# Nova variável para controlar a limpeza de tela
+if 'limpar_tela' not in st.session_state:
+    st.session_state.limpar_tela = False
 
 # --- FUNÇÃO PARA CRIAR O CAPTCHA INTERATIVO ---
 def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
@@ -58,7 +61,13 @@ def renderizar_captcha(caminho_imagem, titulo, quadrados_corretos):
                     st.rerun()
 
 # --- FLUXO DO APLICATIVO ---
-st.title("🎲 Desafio 🎲")
+
+# TRUQUE DE MESTRE: Se a flag de limpar tela estiver ativa, limpamos o título antigo também
+if st.session_state.limpar_tela:
+    st.empty() # Força o Streamlit a limpar os elementos anteriores
+    st.session_state.limpar_tela = False # Desativa a flag
+else:
+    st.title("🎲 Desafio 🎲")
 
 # ETAPA 0: DIGITAR O NOME
 if st.session_state.etapa == 0:
@@ -88,6 +97,7 @@ elif st.session_state.etapa == 1:
     with col1:
         if st.button("Sim, é esse mesmo. ✅", type="primary", use_container_width=True):
             st.session_state.etapa = 2 
+            st.session_state.limpar_tela = True # Ativa a limpeza total
             st.rerun()
     with col2:
         if st.button("Não, quero corrigir ✏️", use_container_width=True):
@@ -98,54 +108,53 @@ elif st.session_state.etapa == 1:
 
 # ETAPA 2: CONTAGEM REGRESSIVA (SUSPENSE)
 elif st.session_state.etapa == 2:
-    # Cria um container vazio que isola TUDO
-    placeholder = st.empty()
+    st.title("🎲 Desafio 🎲") # Título recolocado após a limpeza
+    st.markdown("### Preparando a resposta... 🥁")
     
-    with placeholder.container():
-        # O st.form evita que o Streamlit recarregue no meio da animação
-        with st.form("form_contagem"):
-            st.markdown("### Preparando a resposta... 🥁")
-            
-            caminho_gif = "contagem.gif"
-            
-            if os.path.exists(caminho_gif):
-                col_gif1, col_gif2, col_gif3 = st.columns([1, 4, 1])
-                with col_gif2:
-                    st.image(caminho_gif, use_container_width=True)
-            else:
-                st.warning("GIF não encontrado.")
-            
-            # Tempo para o GIF rodar. Como o seu tem 10s, colocamos 11s para garantir.
-            time.sleep(11)
+    caminho_gif = "contagem.gif"
     
-    # Limpa o formulário inteiro (GIF + botão invisível) da memória
-    placeholder.empty()
+    if os.path.exists(caminho_gif):
+        col_gif1, col_gif2, col_gif3 = st.columns([1, 4, 1])
+        with col_gif2:
+            st.image(caminho_gif, use_container_width=True)
+    else:
+        st.warning("GIF não encontrado. Verifique o arquivo.")
+    
+    # Tempo para o GIF rodar (11 segundos para garantir o 10 completo)
+    time.sleep(11)
     
     st.session_state.etapa = 3 
+    st.session_state.limpar_tela = True # Limpa o GIF antes do Certa Resposta
     st.rerun()
 
 # ETAPA 3: "CERTA RESPOSTA" (Meme 2)
 elif st.session_state.etapa == 3:
+    st.title("🎲 Desafio 🎲")
+    
     col_img1, col_img2, col_img3 = st.columns([1, 4, 1])
     with col_img2:
         st.image("meme_silvio_2.png", use_container_width=True)
         
     if st.button("Avançar para os desafios 🚀", type="primary", use_container_width=True):
         st.session_state.etapa = 4
+        st.session_state.limpar_tela = True
         st.rerun()
 
 # ETAPA 4: Captcha 1 (Café)
 elif st.session_state.etapa == 4:
+    st.title("🎲 Desafio 🎲")
     titulo_captcha1 = "Selecione o líquido sagrado que ajuda a evitar um processo administrativo:"
     renderizar_captcha("captcha1_cafe.png", titulo_captcha1, [3, 4, 5, 6, 7])
 
 # ETAPA 5: Captcha 2 (Rivotril)
 elif st.session_state.etapa == 5:
+    st.title("🎲 Desafio 🎲")
     titulo_captcha2 = "Selecione o único item que impede o funcionário de surtar e não perder o réu primário:"
     renderizar_captcha("captcha2_rivotril.png", titulo_captcha2, [3, 4, 5, 6, 7])
 
 # ETAPA 6: Mensagem Final (TEXTO JUSTIFICADO)
 elif st.session_state.etapa == 6:
+    st.title("🎲 Desafio 🎲")
     st.balloons()
     st.success(f"Parabéns, {st.session_state.nome_usuario}! Você concluiu com êxito o desafio!")
     
@@ -216,4 +225,5 @@ elif st.session_state.etapa == 6:
         st.session_state.nome_usuario = ""
         st.session_state.erro_captcha = False
         st.session_state.input_key = 0
+        st.session_state.limpar_tela = True
         st.rerun()
